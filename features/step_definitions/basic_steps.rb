@@ -1,12 +1,18 @@
+def gearman_server  
+  @gearman_server ||= Gearman::Server.new('localhost:4730')
+end
+
+def gearman_worker
+  @gearman_worker ||= Gearman::Worker.new('localhost:4730')
+end
+
 Given /^gearmand is running$/ do
 end
 
 Given /^a basic worker is running$/ do
-  gearman = Gearman::Server.new('localhost:4730')
-  worker  = Gearman::Worker.new('localhost:4730')
-  worker.add_ability('sleep')
-  assert worker.status == "preparing".to_sym
-  assert gearman.status.empty?
+  gearman_worker.add_ability('sleep')
+  assert gearman_worker.status == "preparing".to_sym
+  assert gearman_server.status.empty?
 end
 
 When /^I add a basic client$/ do
