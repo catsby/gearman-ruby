@@ -12,7 +12,7 @@ end
 Given /^a basic worker is running$/ do
   gearman_worker.add_ability('sleep')
   assert gearman_worker.status == "preparing".to_sym
-  assert gearman_server.status.empty?
+  assert !gearman_server.status.empty?
 end
 
 When /^I add a basic client$/ do
